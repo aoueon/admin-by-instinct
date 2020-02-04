@@ -1,0 +1,7 @@
+/* HIDE / SHOW TOOLBAR */
+html.has-wpadminbar-hidden {
+    margin-top: 0 !important;
+}
+html.has-wpadminbar-hidden #wpadminbar {
+    display: none !important;
+}
