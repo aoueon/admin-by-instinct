@@ -19,7 +19,6 @@ function aniomalia_admin_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'aniomalia_admin_assets' );
 
-
 // Create settings page
 function aniomalia_admin_settings_page_output() {
     ?>
@@ -34,7 +33,6 @@ add_action('admin_menu', 'aniomalia_admin_settings_page');
 function aniomalia_admin_settings_page(){
     add_menu_page( 'Admin by instinct', 'Admin by instinct', 'manage_options', 'admin-by-instinct', 'aniomalia_admin_settings_page_output' );
 }
-
 
 /* Find out which template is being used */
 function aniomalia_admin_template() {
