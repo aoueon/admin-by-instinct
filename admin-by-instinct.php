@@ -48,3 +48,64 @@ function aniomalia_admin_template() {
     ) );
 }
 add_action( 'admin_bar_menu', 'aniomalia_admin_template' );
+
+
+// Add quick links to dashboard
+
+/* Remove select dashboard widgets */
+function aniomalia_admin_remove_dashboard_widgets() {
+    remove_meta_box( 'dashboard_primary', 'dashboard', 'side' );
+} 
+add_action( 'wp_dashboard_setup', 'aniomalia_admin_remove_dashboard_widgets' );
+
+/*  Add intro dashboard widget */
+function aniomalia_admin_dashboard_widget() {
+    wp_add_dashboard_widget(
+        'aniomalia_admin_dashboard_widget',
+        esc_html__( 'Useful Links — Admin by instinct', 'aniomalia' ),
+        'aniomalia_admin_dashboard_widget_render'
+    ); 
+}
+add_action( 'wp_dashboard_setup', 'aniomalia_admin_dashboard_widget' );
+ 
+/**
+ * Create the function to output the content of our Dashboard Widget.
+ */
+function aniomalia_admin_dashboard_widget_render() {
+    if ( is_admin() && isset($_GET['abi-permalinks']) && $_GET['abi-permalinks'] == 'true' ) {
+        flush_rewrite_rules();
+    }
+    ?>
+
+    <ul>
+        <li>
+            <a href="<?php $_SERVER['REQUEST_URI']; ?>?abi-permalinks=true">Refresh Permalinks</a>
+        </li>
+        <li>
+            <a href="#">Another useful thing</a>
+        </li>
+        <li>
+            <a href="#">What about this</a>
+        </li>
+    </ul>
+
+    <?php
+}
+
+
+// Admin Notices
+function author_admin_notice(){
+    global $pagenow;
+    if ( $pagenow == 'index.php' ) {
+
+        if ( isset($_GET['abi-permalinks']) && $_GET['abi-permalinks'] == 'true' ) {
+
+            echo '<div class="notice notice-success is-dismissible">
+                <p>Permalinks have been refreshed.</p>
+            </div>';
+
+        }
+
+    }
+}
+add_action('admin_notices', 'author_admin_notice');
